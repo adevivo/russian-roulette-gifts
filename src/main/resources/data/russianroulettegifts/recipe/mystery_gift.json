@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PSP",
+    "DGD",
+    "PSP"
+  ],
+  "key": {
+    "P": "minecraft:paper",
+    "S": "minecraft:string",
+    "D": "#c:dyes",
+    "G": "minecraft:gold_ingot"
+  },
+  "result": {
+    "id": "minecraft:player_head",
+    "count": 1,
+    "components": {
+      "minecraft:profile": {
+        "id": [1534995482, -1657516178, -1977499393, -301266175],
+        "name": "MysteryGift",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "PLACEHOLDER_BASE64_TEXTURES_REPLACE_WITH_REAL_GIFT_SKIN"
+          }
+        ]
+      },
+      "minecraft:custom_name": "Mystery Gift",
+      "minecraft:lore": ["Open at your own risk…"]
+    }
+  }
+}
