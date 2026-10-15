@@ -53,7 +53,7 @@ The recipe's `textures` value is a **placeholder**. A real base64 gift-box skin 
 | Check | Result |
 |---|---|
 | Recipe loads | ✅ No parse error in the log. The recipe unlocks and crafts in survival, including with mixed dyes (red + blue). |
-| Recipe book | ❌ The recipe was not in the book until after the first craft. **Fixed:** the advancement `advancement/recipes/misc/mystery_gift.json` now unlocks it as soon as the player holds gold ingots or paper. Not yet re-tested in-game. |
+| Recipe book | ✅ (after a fix) At first the recipe was missing from the book until the first craft. The advancement `advancement/recipes/misc/mystery_gift.json` now unlocks it when the player holds gold ingots or paper. Confirmed in a new world: `has_paper` fired at the first paper pickup. |
 | Right-click opens it | ⏳ Not implemented yet (Session 3). Right-click does nothing; breaking it or blowing it up just drops the head. |
 | Crafted item | ✅ Named "Mystery Gift", with the lore "Open at your own risk...". |
 | Placed block keeps profile | ✅ `/data get block` shows `profile: {name: "MysteryGift", id: [I; 1534995482, -1657516178, -1977499393, -301266175]}` and `custom_name`. |
