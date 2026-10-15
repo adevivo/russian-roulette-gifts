@@ -4,6 +4,16 @@ A **server-side-only** Fabric mod for Minecraft **26.2**. Craft a Mystery Gift, 
 
 > **Status: v0.1.0, scaffold and spike.** Only the gift recipe exists so far. Opening a gift and the loot tiers are not implemented yet.
 
+## Download
+
+Built jars are on the [Releases page](https://github.com/adevivo/russian-roulette-gifts/releases). To install by hand on a Minecraft **26.2** Fabric server:
+
+1. [Fabric Loader](https://fabricmc.net/use/) 0.19.5+ for 26.2
+2. [Fabric API](https://modrinth.com/mod/fabric-api) for 26.2 (required, not bundled)
+3. Put `russianroulettegifts-<version>+mc26.2.jar` in the server's `mods/` folder
+
+Clients do not need it.
+
 ## Origin
 
 A subscriber suggested a craftable gift system. The "Russian roulette" twist is that the mod picks the contents at random rather than the player choosing them.
@@ -56,7 +66,7 @@ Loom 1.17 needs a Java 21+ JVM. Set Java 25:
 ```bash
 export JAVA_HOME="$(/usr/libexec/java_home -v 25)"
 ./gradlew build test
-# jar: build/libs/russianroulettegifts-0.1.0.jar
+# jar: build/libs/russianroulettegifts-0.1.0+mc26.2.jar
 ```
 
 | Component | Version |
@@ -68,6 +78,30 @@ export JAVA_HOME="$(/usr/libexec/java_home -v 25)"
 | Java | 25 |
 
 Mod ID `russianroulettegifts`. Mojmap names only (no Yarn). Check APIs with `javap` against the 26.2 jar.
+
+## Release numbering and releasing
+
+Versions are `<mod version>+mc<minecraft version>`, for example `0.1.0+mc26.2`. This is the same scheme as ai-companion and Fabric API. `build.gradle` sets `version = "${mod_version}+mc${minecraft_version}"`, and `processResources` expands it into `fabric.mod.json`.
+
+Jars go out as **GitHub Release assets**. They are not committed to the repo. If you want a local staging directory, use `dist/` (gitignored). The tag is the version with a leading `v`, for example `v0.1.0+mc26.2`.
+
+```bash
+# 1. build, and confirm the jar name ends in +mc26.2
+export JAVA_HOME="$(/usr/libexec/java_home -v 25)"
+./gradlew clean build test && ls build/libs/
+
+# 2. tag the exact commit that produced it, and push both
+git tag -a "v0.1.0+mc26.2" -m "0.1.0 for Minecraft 26.2"
+git push origin master && git push origin "v0.1.0+mc26.2"
+
+# 3. create the release and attach the jar (drop --prerelease once it is tested in-game)
+gh release create "v0.1.0+mc26.2" \
+   "build/libs/russianroulettegifts-0.1.0+mc26.2.jar" \
+   --title "0.1.0 — Minecraft 26.2" --prerelease \
+   --notes "..."
+```
+
+Upload only the main jar, not `-sources.jar`. CurseForge is a parallel channel. Upload the same jar there, and mark Fabric API as a required dependency.
 
 ## Out of scope for v1
 
