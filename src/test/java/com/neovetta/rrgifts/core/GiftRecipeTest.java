@@ -15,11 +15,14 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 class GiftRecipeTest {
-	private static JsonObject loadRecipe() throws IOException {
-		try (InputStream in = GiftRecipeTest.class.getResourceAsStream(
-				"/data/russianroulettegifts/recipe/mystery_gift.json")) {
+	private static JsonObject load(String path) throws IOException {
+		try (InputStream in = GiftRecipeTest.class.getResourceAsStream(path)) {
 			return JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
 		}
+	}
+
+	private static JsonObject loadRecipe() throws IOException {
+		return load("/data/russianroulettegifts/recipe/mystery_gift.json");
 	}
 
 	private static UUID fromIntArray(com.google.gson.JsonArray a) {
@@ -44,5 +47,14 @@ class GiftRecipeTest {
 			assertTrue(key.get(k).isJsonPrimitive(), "ingredient " + k + " must be a plain string");
 		}
 		assertEquals("#c:dyes", key.get("D").getAsString());
+	}
+
+	@Test
+	void recipeBookAdvancementUnlocksGiftRecipe() throws IOException {
+		JsonObject adv = load("/data/russianroulettegifts/advancement/recipes/misc/mystery_gift.json");
+		String recipeId = "russianroulettegifts:mystery_gift";
+		assertEquals(recipeId, adv.getAsJsonObject("rewards").getAsJsonArray("recipes").get(0).getAsString());
+		assertEquals(recipeId, adv.getAsJsonObject("criteria").getAsJsonObject("has_the_recipe")
+				.getAsJsonObject("conditions").get("recipe").getAsString());
 	}
 }
