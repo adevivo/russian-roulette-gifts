@@ -12,7 +12,7 @@ Last updated: 2026-10-15. Session 1 (scaffold and spike) is done. The in-game sp
 
 ## Known gaps / risks
 
-- **The `textures` value is a placeholder, not valid base64.** A real gift-box skin is needed (a base64 textures JSON pointing at a skin).
+- The skin is set (2026-10-15) to an existing Mojang-hosted gift texture, `35787ce1…4e83`, unsigned. It still needs an in-game check that it renders.
 - `minecraft:profile` JSON format (int-array id) **loads correctly in-game**, confirmed 2026-10-15.
 - ~~Profile survival through place → break~~: **confirmed 2026-10-15** (break by hand). The pickaxe and TNT drops were not checked with `/data`.
 - **Lore is lost on place → break** (the skull block entity keeps only `custom_name` and `profile`). This is cosmetic. If it matters, restore the lore on drop in `game/` when the profile id matches. Do not override the vanilla `player_head` loot table, because that changes every head.
@@ -51,7 +51,6 @@ There are 42 tests. They include a check that no file in core imports Minecraft.
 
 Jump Boots lost HandyDandy's `handydandy:jumping` enchant, because that enchant only exists when HandyDandy is installed.
 
-**Gift skin:** `art/gift-skin.png` is a 64×64 skin with the gift box on the head layer and the bow on the hat layer. It has to be uploaded to Mojang's texture host, for example through mineskin.org. Then replace the placeholder `textures` value in `recipe/mystery_gift.json` with the returned base64 value, and add the `signature` if one is returned.
 
 ## Next steps (from the approved plan, `~/.claude/plans/read-the-readme-and-fluffy-dongarra.md`)
 

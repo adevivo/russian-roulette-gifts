@@ -30,7 +30,7 @@ P S P     D = any dye (#c:dyes)   G = gold ingot (the stake)
 
 The gold ingot is deliberate. Without a cost, gifts with diamond jackpots would be a free diamond farm.
 
-The recipe's `textures` value is a **placeholder**. A real base64 gift-box skin is still needed.
+The skin is an existing gift-box texture on Mojang's host (`textures.minecraft.net/texture/35787ce1…4e83`): a red box with a green ribbon. The recipe stores it as an unsigned base64 `textures` property.
 
 ## Planned design
 

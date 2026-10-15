@@ -57,4 +57,16 @@ class GiftRecipeTest {
 		assertEquals(recipeId, adv.getAsJsonObject("criteria").getAsJsonObject("has_the_recipe")
 				.getAsJsonObject("conditions").get("recipe").getAsString());
 	}
+
+	@Test
+	void textureIsMojangHostedSkin() throws IOException {
+		JsonObject profile = loadRecipe().getAsJsonObject("result").getAsJsonObject("components")
+				.getAsJsonObject("minecraft:profile");
+		String value = profile.getAsJsonArray("properties").get(0).getAsJsonObject().get("value").getAsString();
+		String json = new String(java.util.Base64.getDecoder().decode(value), StandardCharsets.UTF_8);
+		String url = JsonParser.parseString(json).getAsJsonObject().getAsJsonObject("textures")
+				.getAsJsonObject("SKIN").get("url").getAsString();
+		// Clients only load skins from Mojang's texture host.
+		assertTrue(url.startsWith("http://textures.minecraft.net/texture/"), url);
+	}
 }
