@@ -33,9 +33,29 @@ Record the findings in the readme's spike section.
 
 **If the profile does not survive:** fall back to a `SavedData` set of placed gift positions plus a small mixin.
 
+## Session 2 (core): done 2026-10-15
+
+`core/` holds:
+- the `Outcome` sealed model
+- `WeightedRoller` and `GiftRoller` (picks a tier, then an outcome)
+- `LootConfigParser`, which rejects unknown keys and reports the JSON path of each error
+- `EnchantPicker` and `CurseRule`
+- `DefaultLoot`, which loads `resources/russianroulettegifts/default_loot.json`
+
+There are 42 tests. They include a check that no file in core imports Minecraft.
+
+**The game layer (Session 3) has to:**
+- Validate every id in `default_loot.json` and in the config against the 26.2 registries. Core only checks the `ns:path` format.
+- Build an `EnchantDef` list for each item from the enchantment registry.
+- Map the `RolledGift` outcomes to world actions.
+
+Jump Boots lost HandyDandy's `handydandy:jumping` enchant, because that enchant only exists when HandyDandy is installed.
+
+**Gift skin:** `art/gift-skin.png` is a 64×64 skin with the gift box on the head layer and the bow on the hat layer. It has to be uploaded to Mojang's texture host, for example through mineskin.org. Then replace the placeholder `textures` value in `recipe/mystery_gift.json` with the returned base64 value, and add the `signature` if one is returned.
+
 ## Next steps (from the approved plan, `~/.claude/plans/read-the-readme-and-fluffy-dongarra.md`)
 
-2. **Core + tests** (pure Java, no MC imports): `WeightedRoller` (seedable), outcome model (`GiveItem`, `Explode`, `SpawnMob`, `Effect`, `Cursed`, `NestedGift`), tiers/loot table, Gson parser and validator with clear errors, `EnchantPicker`, bundled `loot.json`. Tests: a ~100k-roll run within ±1% of the weights, weight 0 never picked, bad configs rejected, enchant rules (incompatibles, level bounds, Binding only on wearables), bundled `loot.json` validates.
+2. ~~**Core + tests**~~ done. (pure Java, no MC imports): `WeightedRoller` (seedable), outcome model (`GiveItem`, `Explode`, `SpawnMob`, `Effect`, `Cursed`, `NestedGift`), tiers/loot table, Gson parser and validator with clear errors, `EnchantPicker`, bundled `loot.json`. Tests: a ~100k-roll run within ±1% of the weights, weight 0 never picked, bad configs rejected, enchant rules (incompatibles, level bounds, Binding only on wearables), bundled `loot.json` validates.
 3. **Open handler + outcomes** (`game/`): `GiftItems`, `GiftOpenHandler` (`UseBlockCallback`, server side, main hand, check the `SkullBlockEntity` profile id), `OutcomeApplier`, HandyDandy items as Jackpot outcomes, sounds, particles and action-bar messages.
 4. **Polish:** tune weights, `/rrgifts give|reload` (op level 2), `ConfigLoader` (invalid config logs an error and falls back to the default), CurseForge description ("server-side only").
 

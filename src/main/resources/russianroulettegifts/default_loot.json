@@ -1,0 +1,378 @@
+{
+  "version": 1,
+  "tiers": [
+    {
+      "id": "disaster",
+      "weight": 15,
+      "message": "Disaster! It was a trap!",
+      "outcomes": [
+        {
+          "type": "explode",
+          "fuse_ticks": 40
+        },
+        {
+          "type": "spawn_mob",
+          "entity": "minecraft:creeper",
+          "count": 1
+        },
+        {
+          "type": "spawn_mob",
+          "entity": "minecraft:bee",
+          "count": 4,
+          "angry": true
+        },
+        {
+          "type": "effect",
+          "effect": "minecraft:wither",
+          "duration_ticks": 200,
+          "amplifier": 0
+        },
+        {
+          "type": "effect",
+          "effect": "minecraft:nausea",
+          "duration_ticks": 300,
+          "amplifier": 0
+        },
+        {
+          "type": "effect",
+          "effect": "minecraft:levitation",
+          "duration_ticks": 100,
+          "amplifier": 1
+        },
+        {
+          "type": "effect",
+          "effect": "minecraft:blindness",
+          "duration_ticks": 200,
+          "amplifier": 0
+        },
+        {
+          "type": "drop_block",
+          "block": "minecraft:anvil",
+          "height": 10
+        },
+        {
+          "type": "spawn_mob",
+          "entity": "minecraft:silverfish",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": "cursed",
+      "weight": 15,
+      "message": "Cursed... it looks great though.",
+      "outcomes": [
+        {
+          "type": "cursed",
+          "curse": "any",
+          "item": {
+            "item": "minecraft:diamond_sword",
+            "random_enchants": {
+              "min": 2,
+              "max": 3
+            }
+          }
+        },
+        {
+          "type": "cursed",
+          "curse": "any",
+          "item": {
+            "item": "minecraft:diamond_pickaxe",
+            "random_enchants": {
+              "min": 2,
+              "max": 3
+            }
+          }
+        },
+        {
+          "type": "cursed",
+          "curse": "any",
+          "item": {
+            "item": "minecraft:iron_helmet",
+            "random_enchants": {
+              "min": 2,
+              "max": 3
+            }
+          }
+        },
+        {
+          "type": "cursed",
+          "curse": "binding",
+          "item": {
+            "item": "minecraft:iron_helmet",
+            "random_enchants": {
+              "min": 2,
+              "max": 3
+            }
+          }
+        },
+        {
+          "type": "cursed",
+          "curse": "any",
+          "item": {
+            "item": "minecraft:iron_chestplate",
+            "random_enchants": {
+              "min": 2,
+              "max": 3
+            }
+          }
+        },
+        {
+          "type": "cursed",
+          "curse": "binding",
+          "item": {
+            "item": "minecraft:iron_chestplate",
+            "random_enchants": {
+              "min": 2,
+              "max": 3
+            }
+          }
+        },
+        {
+          "type": "cursed",
+          "curse": "vanishing",
+          "item": {
+            "item": "minecraft:bow",
+            "random_enchants": {
+              "min": 2,
+              "max": 3
+            }
+          }
+        },
+        {
+          "type": "cursed",
+          "curse": "vanishing",
+          "item": {
+            "item": "minecraft:diamond_sword",
+            "random_enchants": {
+              "min": 2,
+              "max": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "junk",
+      "weight": 30,
+      "message": "Meh. Junk.",
+      "outcomes": [
+        {
+          "type": "give_item",
+          "item": "minecraft:dirt",
+          "count": 8,
+          "max_count": 16
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:rotten_flesh",
+          "count": 3,
+          "max_count": 8
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:stick",
+          "max_count": 4
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:poisonous_potato",
+          "max_count": 3
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:dead_bush",
+          "max_count": 2
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:wheat_seeds",
+          "count": 4,
+          "max_count": 12
+        }
+      ]
+    },
+    {
+      "id": "good",
+      "weight": 30,
+      "message": "Nice!",
+      "outcomes": [
+        {
+          "type": "give_item",
+          "item": "minecraft:iron_ingot",
+          "count": 4,
+          "max_count": 10
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:gold_ingot",
+          "count": 3,
+          "max_count": 8
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:cooked_beef",
+          "count": 8,
+          "max_count": 16
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:golden_carrot",
+          "count": 4,
+          "max_count": 8
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:bread",
+          "count": 6,
+          "max_count": 12
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:iron_sword",
+          "random_enchants": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:iron_pickaxe",
+          "random_enchants": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:iron_chestplate",
+          "random_enchants": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:bow",
+          "random_enchants": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:arrow",
+          "count": 16,
+          "max_count": 32
+        }
+      ]
+    },
+    {
+      "id": "jackpot",
+      "weight": 10,
+      "message": "JACKPOT!",
+      "outcomes": [
+        {
+          "type": "give_item",
+          "item": "minecraft:diamond",
+          "count": 2,
+          "max_count": 5,
+          "weight": 5
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:emerald",
+          "count": 4,
+          "max_count": 10
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:enchanted_golden_apple"
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:diamond_sword",
+          "random_enchants": {
+            "min": 3,
+            "max": 5,
+            "over_max": 2
+          }
+        },
+        {
+          "type": "nested_gift",
+          "count": 2
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:leather_boots",
+          "name": "Swim Fins",
+          "lore": [
+            "Mighty duck feet"
+          ],
+          "enchantments": {
+            "minecraft:depth_strider": 7,
+            "minecraft:respiration": 3
+          },
+          "weight": 1
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:leather_boots",
+          "name": "Jump Boots",
+          "lore": [
+            "Jump like a kangaroo"
+          ],
+          "enchantments": {
+            "minecraft:feather_falling": 4,
+            "minecraft:protection": 4
+          },
+          "weight": 1
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:golden_pickaxe",
+          "name": "Copper Pickaxe",
+          "lore": [
+            "Mighty copper pickaxe",
+            "of the dwarves"
+          ],
+          "enchantments": {
+            "minecraft:unbreaking": 10,
+            "minecraft:efficiency": 7
+          },
+          "weight": 1
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:iron_sword",
+          "name": "Ginsu Iron Sword",
+          "lore": [
+            "Forged by ancient",
+            "minecraft dwarves and",
+            "sharper than a",
+            "butter knife"
+          ],
+          "enchantments": {
+            "minecraft:sharpness": 5
+          },
+          "weight": 1
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:diamond_sword",
+          "name": "Ouchy Diamond Sword",
+          "lore": [
+            "Forged by ancient",
+            "minecraft elves and",
+            "sharper than the",
+            "average pointy object"
+          ],
+          "enchantments": {
+            "minecraft:sharpness": 10
+          },
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}
