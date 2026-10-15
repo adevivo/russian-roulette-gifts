@@ -1,6 +1,6 @@
 # Handoff — Russian Roulette Gifts
 
-Last updated: 2026-10-12. Session 1 (scaffold + spike) is built; the in-game spike is **not yet run**.
+Last updated: 2026-10-15. Session 1 (scaffold and spike) is done. The in-game spike **passed**: the gift profile survives place and break. Results are in the readme's "Spike results" section. `v0.1.0+mc26.2` is published as a GitHub pre-release.
 
 ## Done
 
@@ -13,8 +13,9 @@ Last updated: 2026-10-12. Session 1 (scaffold + spike) is built; the in-game spi
 ## Known gaps / risks
 
 - **The `textures` value is a placeholder, not valid base64.** A real gift-box skin is needed (a base64 textures JSON pointing at a skin).
-- **`minecraft:profile` JSON format is unverified in-game.** The id is an int array. The unit test only checks JSON shape; Minecraft's codec has not loaded it. Fallbacks to try if the log shows a parse error: id as a UUID string, or drop `properties` to isolate it.
-- **Profile survival through place → break is unconfirmed.** The whole identification design depends on it.
+- `minecraft:profile` JSON format (int-array id) **loads correctly in-game**, confirmed 2026-10-15.
+- ~~Profile survival through place → break~~: **confirmed 2026-10-15** (break by hand). The pickaxe and TNT drops were not checked with `/data`.
+- **Lore is lost on place → break** (the skull block entity keeps only `custom_name` and `profile`). This is cosmetic. If it matters, restore the lore on drop in `game/` when the profile id matches. Do not override the vanilla `player_head` loot table, because that changes every head.
 - `#c:dyes` comes from Fabric API's convention tags. `#minecraft:dyes` is a vanilla alternative.
 
 ## Testing to do (`export JAVA_HOME="$(/usr/libexec/java_home -v 25)"; ./gradlew runClient`)

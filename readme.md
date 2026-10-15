@@ -48,16 +48,19 @@ The recipe's `textures` value is a **placeholder**. A real base64 gift-box skin 
 - **Identification:** the profile UUID. Vanilla skull block entities should keep the profile through place and break. This is the open question the spike must confirm.
 - **Code layout** (`com.neovetta.rrgifts`): `core/` is pure Java with no Minecraft imports (rolling, loot config, enchant picking, all unit-tested). `game/` is a thin Minecraft layer. This keeps a later 1.21.11 port cheap.
 
-## Spike checklist (not yet verified in-game)
+## Spike results (2026-10-15, CurseForge client, MC 26.2, Fabric API 0.161.0)
 
-Run `./gradlew runClient`, then:
+| Check | Result |
+|---|---|
+| Recipe loads | ✅ No parse error in the log. The recipe unlocks and crafts in survival, including with mixed dyes (red + blue). |
+| Crafted item | ✅ Named "Mystery Gift", with the lore "Open at your own risk...". |
+| Placed block keeps profile | ✅ `/data get block` shows `profile: {name: "MysteryGift", id: [I; 1534995482, -1657516178, -1977499393, -301266175]}` and `custom_name`. |
+| Broken by hand: drop keeps profile | ✅ The dropped `player_head` has the same `minecraft:profile` id and name, plus `custom_name`. **The identification design holds.** |
+| Drop keeps lore | ❌ **Lore is lost on place.** The skull block entity stores only `custom_name` and `profile` (`components: {}`), so a re-picked gift has no lore. This is cosmetic, because identification uses the profile. |
+| Pickaxe / TNT drops | ⏳ Tested, but the drops were not checked with `/data`. |
+| Texture | As expected, the placeholder logs `Could not decode textures payload: Illegal base64 character 5f` (harmless) and renders a default skin, based on the UUID. A real skin is still needed. |
 
-1. Craft the gift with several dye colors.
-2. Place it, check `/data get block` shows the profile.
-3. Break it and confirm the dropped head keeps the same profile id.
-4. Note whether the head renders a texture.
-
-If the profile does not survive place then break, the fallback is a `SavedData` set of placed gift positions plus a small mixin.
+The `SavedData` and mixin fallback is not needed.
 
 ## Build and test
 
