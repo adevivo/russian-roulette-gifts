@@ -2,6 +2,7 @@ package com.neovetta.rrgifts;
 
 import com.neovetta.rrgifts.game.ConfigLoader;
 import com.neovetta.rrgifts.game.GiftCommand;
+import com.neovetta.rrgifts.game.GiftItems;
 import com.neovetta.rrgifts.game.GiftOpenHandler;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ public class RussianRouletteGifts implements ModInitializer {
 		ConfigLoader.register();
 		GiftOpenHandler.register();
 		GiftCommand.register();
+		GiftItems.registerLoreRestore();
 		LOGGER.info("Russian Roulette Gifts initialized");
 	}
 }

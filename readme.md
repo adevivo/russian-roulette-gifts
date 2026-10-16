@@ -58,7 +58,7 @@ The skin is an existing gift-box texture on Mojang's host (`textures.minecraft.n
 | Crafted item | ✅ Named "Mystery Gift", with the lore "Open at your own risk...". |
 | Placed block keeps profile | ✅ `/data get block` shows `profile: {name: "MysteryGift", id: [I; 1534995482, -1657516178, -1977499393, -301266175]}` and `custom_name`. |
 | Broken by hand: drop keeps profile | ✅ The dropped `player_head` has the same `minecraft:profile` id and name, plus `custom_name`. **The identification design holds.** |
-| Drop keeps lore | ❌ **Lore is lost on place.** The skull block entity stores only `custom_name` and `profile` (`components: {}`), so a re-picked gift has no lore. This is cosmetic, because identification uses the profile. |
+| Drop keeps lore | ✅ (after a fix) **At first the lore was lost on place.** The skull block entity stores only `custom_name` and `profile` (`components: {}`), so a re-picked gift has no lore. This is cosmetic, because identification uses the profile. It is now fixed: the lore is restored when the item drops. |
 | Pickaxe / TNT drops | ⏳ Tested, but the drops were not checked with `/data`. |
 | Texture | As expected, the placeholder logs `Could not decode textures payload: Illegal base64 character 5f` (harmless) and renders a default skin, based on the UUID. A real skin is still needed. |
 

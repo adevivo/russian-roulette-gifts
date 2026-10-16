@@ -5,6 +5,10 @@
 	"name": "Russian Roulette Gifts",
 	"description": "Craft a Mystery Gift, place it, open it. Server-side only; optional on clients.",
 	"authors": ["Adrian DeVivo"],
+	"contact": {
+		"sources": "https://github.com/adevivo/russian-roulette-gifts",
+		"issues": "https://github.com/adevivo/russian-roulette-gifts/issues"
+	},
 	"license": "MIT",
 	"environment": "*",
 	"entrypoints": {

@@ -69,6 +69,16 @@ There are 50 tests.
 
 **Titles (after 0.2.0):** results show as an on-screen title, with the tier message as the title and `OutcomeText.describe(outcome)` underneath, replacing the action-bar message.
 
+## Session 4 (polish): partly done 2026-10-15
+
+- **Lore on dropped gifts:** fixed after 0.2.1 by `GiftItems.registerLoreRestore()` (`ServerEntityEvents.ENTITY_LOAD`), which adds the lore back to any dropped gift item that is missing it. Note that every item has a default empty lore component, so the check is on `lines()`, not `has()`.
+- **CurseForge copy:** `docs/curseforge-description.md`
+- `fabric.mod.json` now has contact links.
+- **Still to do:**
+  - a dedicated server joined by an unmodded client (the main claim on the CurseForge page)
+  - promote the GitHub release from pre-release
+  - upload to CurseForge
+
 ## Next steps (from the approved plan, `~/.claude/plans/read-the-readme-and-fluffy-dongarra.md`)
 
 2. ~~**Core + tests**~~ done. (pure Java, no MC imports): `WeightedRoller` (seedable), outcome model (`GiveItem`, `Explode`, `SpawnMob`, `Effect`, `Cursed`, `NestedGift`), tiers/loot table, Gson parser and validator with clear errors, `EnchantPicker`, bundled `loot.json`. Tests: a ~100k-roll run within ±1% of the weights, weight 0 never picked, bad configs rejected, enchant rules (incompatibles, level bounds, Binding only on wearables), bundled `loot.json` validates.
