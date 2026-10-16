@@ -63,7 +63,11 @@ The code is in `game/`:
 
 There are 50 tests.
 
-**Known issue:** the config file is written once. Later changes to the bundled default do not reach an existing config file. Decide in Session 4 whether to add version-based regeneration.
+**Config upgrades (fixed 2026-10-15, after 0.2.0):**
+- `core/ConfigUpgrade` decides what happens to an existing config file. The decision comes from comparing the config against the `russian-roulette-gifts.default.json` reference copy: an untouched config is replaced, and an edited one is kept, with a warning if the default has changed since.
+- 0.2.0 installs have no reference copy. They are recognised by the SHA-256 of the 0.2.0 default (`PRE_REFERENCE_DEFAULTS`).
+
+**Titles (after 0.2.0):** results show as an on-screen title, with the tier message as the title and `OutcomeText.describe(outcome)` underneath, replacing the action-bar message.
 
 ## Next steps (from the approved plan, `~/.claude/plans/read-the-readme-and-fluffy-dongarra.md`)
 

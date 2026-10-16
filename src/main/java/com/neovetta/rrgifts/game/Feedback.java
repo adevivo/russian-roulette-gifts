@@ -1,11 +1,16 @@
 package com.neovetta.rrgifts.game;
 
+import com.neovetta.rrgifts.core.Outcome;
+import com.neovetta.rrgifts.core.OutcomeText;
 import com.neovetta.rrgifts.core.TierDef;
 import com.neovetta.rrgifts.core.TierFeedback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
+import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
+import net.minecraft.network.protocol.game.ClientboundSetTitlesAnimationPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -13,7 +18,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.Vec3;
 
-/** Action-bar message, sound and particles for a rolled tier. */
+/** On-screen title, sound and particles for a rolled tier. Titles are vanilla packets, so unmodded clients see them. */
 public final class Feedback {
 	private Feedback() {}
 
@@ -28,9 +33,13 @@ public final class Feedback {
 		};
 	}
 
-	public static void send(ServerPlayer opener, ServerLevel level, Vec3 origin, TierDef tier) {
+	public static void send(ServerPlayer opener, ServerLevel level, Vec3 origin, TierDef tier, Outcome outcome) {
 		TierFeedback kind = TierFeedback.of(tier.id());
-		opener.sendOverlayMessage(Component.literal(tier.message()).withStyle(styleFor(kind)));
+		// Ticks: fade in, stay, fade out. Short enough that opening gifts back to back does not pile up.
+		opener.connection.send(new ClientboundSetTitlesAnimationPacket(5, 40, 10));
+		opener.connection.send(new ClientboundSetSubtitleTextPacket(
+				Component.literal(OutcomeText.describe(outcome)).withStyle(ChatFormatting.WHITE)));
+		opener.connection.send(new ClientboundSetTitleTextPacket(Component.literal(tier.message()).withStyle(styleFor(kind))));
 
 		SoundEvent sound;
 		float pitch = 1.0f;

@@ -64,7 +64,7 @@ public final class GiftOpenHandler {
 		}
 		// Outside the refund path: the outcome already happened, so a feedback failure must not hand back a gift.
 		try {
-			Feedback.send(opener, level, origin, rolled.tier());
+			Feedback.send(opener, level, origin, rolled.tier(), rolled.outcome());
 		} catch (Exception e) {
 			RussianRouletteGifts.LOGGER.error("Gift feedback failed for tier {}", rolled.tier().id(), e);
 		}

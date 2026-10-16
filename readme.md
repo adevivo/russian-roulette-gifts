@@ -89,6 +89,9 @@ Mod ID `russianroulettegifts`. Mojmap names only (no Yarn). Check APIs with `jav
 - `/rrgifts give [count] [targets]`: give Mystery Gifts (op level 2).
 - `/rrgifts reload`: re-read the loot config.
 - `config/russian-roulette-gifts.json` is written from the bundled default on first start. Every id is checked against the game registries. On any error the mod logs the JSON path and uses the default loot instead.
+- `config/russian-roulette-gifts.default.json` is the mod's reference copy of the current default. It is rewritten on each start. When the mod is updated:
+  - an **unedited** config is replaced with the new default
+  - an **edited** config is kept, and the log says when it is based on an older default, so you can compare the two files
 
 ## Release numbering and releasing
 
