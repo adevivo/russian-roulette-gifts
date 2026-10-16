@@ -2,7 +2,7 @@
 
 A **server-side-only** Fabric mod for Minecraft **26.2**. Craft a Mystery Gift, place it, right-click it, and something random comes out. It might be terrible (primed TNT, a creeper) or amazing (an enchanted sword). Vanilla clients can join a server running it, and it is optional on clients.
 
-> **Status: v0.1.0, scaffold and spike.** Only the gift recipe exists so far. Opening a gift and the loot tiers are not implemented yet.
+> **Status: v0.2.0, playable.** Craft a gift, place it and right-click it. Tested in single-player. The config file and `/rrgifts give|reload` work; a vanilla-client check on a dedicated server is still to do.
 
 ## Download
 
@@ -32,18 +32,18 @@ The gold ingot is deliberate. Without a cost, gifts with diamond jackpots would 
 
 The skin is an existing gift-box texture on Mojang's host (`textures.minecraft.net/texture/35787ce1…4e83`): a red box with a green ribbon. The recipe stores it as an unsigned base64 `textures` property.
 
-## Planned design
+## Design
 
-- **Opening:** right-clicking a placed gift head removes the block, rolls a tier and applies the outcome.
+- **Opening:** right-clicking a placed gift head removes the block, rolls a tier and applies the outcome. Opening is blocked in adventure mode and inside spawn protection.
 - **Tiers** (weights are defaults, overridable in config):
 
   | Tier | Weight | Examples |
   |---|---|---|
-  | Disaster | 15 | primed TNT, creeper, angry bees, bad effects, falling anvil |
-  | Cursed | 15 | good enchanted item with Curse of Vanishing or Binding |
-  | Junk | 30 | dirt, rotten flesh, a stick |
-  | Good | 30 | iron/gold, food, gear with random valid enchantments |
-  | Jackpot | 10 | diamonds, HandyDandy custom items, high-level gear, another gift |
+  | Disaster | 20 | primed TNT, creeper, angry bees, bad effects, falling anvil |
+  | Cursed | 20 | good enchanted item with Curse of Vanishing or Binding |
+  | Junk | 10 | gag gifts ("Lump of Coal", "Premium Dirt", "IOU"...), each with 2–4 gold nuggets back |
+  | Good | 35 | iron/gold, food, gear with random valid enchantments |
+  | Jackpot | 15 | diamonds, HandyDandy custom items, high-level gear, another gift |
 
 - **Identification:** the profile UUID. Vanilla skull block entities should keep the profile through place and break. This is the open question the spike must confirm.
 - **Code layout** (`com.neovetta.rrgifts`): `core/` is pure Java with no Minecraft imports (rolling, loot config, enchant picking, all unit-tested). `game/` is a thin Minecraft layer. This keeps a later 1.21.11 port cheap.
@@ -83,6 +83,12 @@ export JAVA_HOME="$(/usr/libexec/java_home -v 25)"
 | Java | 25 |
 
 Mod ID `russianroulettegifts`. Mojmap names only (no Yarn). Check APIs with `javap` against the 26.2 jar.
+
+## Commands and config
+
+- `/rrgifts give [count] [targets]`: give Mystery Gifts (op level 2).
+- `/rrgifts reload`: re-read the loot config.
+- `config/russian-roulette-gifts.json` is written from the bundled default on first start. Every id is checked against the game registries. On any error the mod logs the JSON path and uses the default loot instead.
 
 ## Release numbering and releasing
 
