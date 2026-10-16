@@ -52,6 +52,19 @@ There are 42 tests. They include a check that no file in core imports Minecraft.
 Jump Boots lost HandyDandy's `handydandy:jumping` enchant, because that enchant only exists when HandyDandy is installed.
 
 
+## Session 3 (opening): built 2026-10-15, not yet tested in-game
+
+The code is in `game/`:
+- `GiftOpenHandler`: opens a placed gift on right-click, server side, main hand only. It respects adventure mode and spawn protection. If the outcome throws, it gives the gift back; a failure in the feedback step does not refund.
+- `OutcomeApplier` and `McEnchantAdapter`
+- `Feedback`: action bar via `ServerPlayer.sendOverlayMessage`, because `displayClientMessage` does not exist in 26.2
+- `ConfigLoader` and `LootValidator`: writes `config/russian-roulette-gifts.json` on first start and checks every id against the registries. On any error it logs and uses the default loot.
+- `GiftCommand`: `/rrgifts give [count] [targets]` and `/rrgifts reload` (op level 2). These were moved up from Session 4 to make testing easier.
+
+There are 50 tests.
+
+**Known issue:** the config file is written once. Later changes to the bundled default do not reach an existing config file. Decide in Session 4 whether to add version-based regeneration.
+
 ## Next steps (from the approved plan, `~/.claude/plans/read-the-readme-and-fluffy-dongarra.md`)
 
 2. ~~**Core + tests**~~ done. (pure Java, no MC imports): `WeightedRoller` (seedable), outcome model (`GiveItem`, `Explode`, `SpawnMob`, `Effect`, `Cursed`, `NestedGift`), tiers/loot table, Gson parser and validator with clear errors, `EnchantPicker`, bundled `loot.json`. Tests: a ~100k-roll run within ±1% of the weights, weight 0 never picked, bad configs rejected, enchant rules (incompatibles, level bounds, Binding only on wearables), bundled `loot.json` validates.

@@ -69,4 +69,16 @@ class GiftRecipeTest {
 		// Clients only load skins from Mojang's texture host.
 		assertTrue(url.startsWith("http://textures.minecraft.net/texture/"), url);
 	}
+
+	@Test
+	void recipeResultMatchesGameConstants() throws IOException {
+		JsonObject comps = loadRecipe().getAsJsonObject("result").getAsJsonObject("components");
+		JsonObject profile = comps.getAsJsonObject("minecraft:profile");
+		JsonObject prop = profile.getAsJsonArray("properties").get(0).getAsJsonObject();
+		assertEquals("textures", prop.get("name").getAsString());
+		assertEquals(GiftConstants.GIFT_TEXTURE_VALUE, prop.get("value").getAsString());
+		assertEquals(GiftConstants.GIFT_NAME, comps.get("minecraft:custom_name").getAsString());
+		assertEquals(1, comps.getAsJsonArray("minecraft:lore").size());
+		assertEquals(GiftConstants.GIFT_LORE, comps.getAsJsonArray("minecraft:lore").get(0).getAsString());
+	}
 }
