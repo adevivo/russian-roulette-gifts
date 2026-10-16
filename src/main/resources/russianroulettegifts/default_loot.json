@@ -3,7 +3,7 @@
   "tiers": [
     {
       "id": "disaster",
-      "weight": 15,
+      "weight": 20,
       "message": "Disaster! It was a trap!",
       "outcomes": [
         {
@@ -59,7 +59,7 @@
     },
     {
       "id": "cursed",
-      "weight": 15,
+      "weight": 20,
       "message": "Cursed... it looks great though.",
       "outcomes": [
         {
@@ -154,47 +154,97 @@
     },
     {
       "id": "junk",
-      "weight": 30,
-      "message": "Meh. Junk.",
+      "weight": 10,
+      "message": "Meh. Junk... but it's the thought that counts.",
       "outcomes": [
+        {
+          "type": "give_item",
+          "item": "minecraft:coal",
+          "count": 1,
+          "name": "Lump of Coal",
+          "lore": [
+            "You've been naughty."
+          ]
+        },
         {
           "type": "give_item",
           "item": "minecraft:dirt",
           "count": 8,
-          "max_count": 16
+          "max_count": 16,
+          "name": "Premium Dirt",
+          "lore": [
+            "Hand-selected. Artisanal. Organic."
+          ]
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:stick",
+          "count": 1,
+          "name": "A Stick",
+          "lore": [
+            "Congratulations."
+          ]
         },
         {
           "type": "give_item",
           "item": "minecraft:rotten_flesh",
           "count": 3,
-          "max_count": 8
-        },
-        {
-          "type": "give_item",
-          "item": "minecraft:stick",
-          "max_count": 4
+          "max_count": 6,
+          "name": "Mystery Meat",
+          "lore": [
+            "Do not ask what's in it."
+          ]
         },
         {
           "type": "give_item",
           "item": "minecraft:poisonous_potato",
-          "max_count": 3
+          "count": 1,
+          "name": "Definitely Fine Potato",
+          "lore": [
+            "Probably."
+          ]
         },
         {
           "type": "give_item",
           "item": "minecraft:dead_bush",
-          "max_count": 2
+          "count": 1,
+          "name": "Houseplant",
+          "lore": [
+            "Very low maintenance."
+          ]
         },
         {
           "type": "give_item",
           "item": "minecraft:wheat_seeds",
           "count": 4,
-          "max_count": 12
+          "max_count": 12,
+          "name": "Some Assembly Required",
+          "lore": [
+            "Just add dirt, water and patience."
+          ]
+        },
+        {
+          "type": "give_item",
+          "item": "minecraft:paper",
+          "count": 1,
+          "name": "IOU",
+          "lore": [
+            "Good for one (1) real present. Maybe."
+          ]
+        }
+      ],
+      "bonus": [
+        {
+          "type": "give_item",
+          "item": "minecraft:gold_nugget",
+          "count": 2,
+          "max_count": 4
         }
       ]
     },
     {
       "id": "good",
-      "weight": 30,
+      "weight": 35,
       "message": "Nice!",
       "outcomes": [
         {
@@ -269,7 +319,7 @@
     },
     {
       "id": "jackpot",
-      "weight": 10,
+      "weight": 15,
       "message": "JACKPOT!",
       "outcomes": [
         {

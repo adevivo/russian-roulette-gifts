@@ -240,4 +240,25 @@ class LootConfigParserTest {
 			assertThrows(LootConfigException.class, () -> parse(bad), bad);
 		}
 	}
+
+	@Test
+	void tierBonusParsesAndRejectsWeight() {
+		String ok = """
+				{"version":1,"tiers":[{"id":"junk","weight":1,"outcomes":[{"type":"give_item","item":"minecraft:stick"}],
+				"bonus":[{"type":"give_item","item":"minecraft:gold_nugget","count":2,"max_count":4}]}]}""";
+		TierDef t = LootConfigParser.parse(new java.io.StringReader(ok)).tiers().get(0);
+		assertEquals(1, t.bonus().size());
+		assertEquals("minecraft:gold_nugget", ((Outcome.GiveItem) t.bonus().get(0)).item());
+
+		String bad = ok.replace("\"count\":2", "\"weight\":3,\"count\":2");
+		LootConfigException e = assertThrows(LootConfigException.class, () -> LootConfigParser.parse(new java.io.StringReader(bad)));
+		assertTrue(e.getMessage().contains("tiers[0].bonus[0].weight"), e.getMessage());
+	}
+
+	@Test
+	void tierWithoutBonusHasEmptyBonus() {
+		String ok = """
+				{"version":1,"tiers":[{"id":"a","weight":1,"outcomes":[{"type":"nested_gift"}]}]}""";
+		assertTrue(LootConfigParser.parse(new java.io.StringReader(ok)).tiers().get(0).bonus().isEmpty());
+	}
 }

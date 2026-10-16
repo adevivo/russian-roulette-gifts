@@ -23,6 +23,9 @@ public final class LootValidator {
 				WeightedOutcome wo = t.outcomes().get(j);
 				validateOutcome(wo.outcome(), "tiers[" + i + "].outcomes[" + j + "]", access);
 			}
+			for (int j = 0; j < t.bonus().size(); j++) {
+				validateOutcome(t.bonus().get(j), "tiers[" + i + "].bonus[" + j + "]", access);
+			}
 		}
 	}
 

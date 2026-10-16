@@ -22,7 +22,7 @@ class DefaultLootTest {
 	@Test
 	void tiersAndWeights() {
 		assertEquals(List.of("disaster", "cursed", "junk", "good", "jackpot"), table.tiers().stream().map(TierDef::id).toList());
-		assertEquals(List.of(15, 15, 30, 30, 10), table.tiers().stream().map(TierDef::weight).toList());
+		assertEquals(List.of(20, 20, 10, 35, 15), table.tiers().stream().map(TierDef::weight).toList());
 	}
 
 	@Test
@@ -69,5 +69,19 @@ class DefaultLootTest {
 			}
 		}
 		assertTrue(cursedCount > 0);
+	}
+
+	@Test
+	void junkIsNamedAndRefundsSomeGold() {
+		TierDef junk = DefaultLoot.load().tiers().stream().filter(t -> t.id().equals("junk")).findFirst().orElseThrow();
+		for (WeightedOutcome wo : junk.outcomes()) {
+			Outcome.GiveItem g = (Outcome.GiveItem) wo.outcome();
+			assertNotNull(g.name(), g.item() + " should be a named gag item");
+		}
+		assertEquals(1, junk.bonus().size());
+		Outcome.GiveItem nuggets = (Outcome.GiveItem) junk.bonus().get(0);
+		assertEquals("minecraft:gold_nugget", nuggets.item());
+		// A gold ingot is 9 nuggets: the consolation must stay a partial refund.
+		assertTrue(nuggets.maxCount() < 9);
 	}
 }

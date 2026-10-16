@@ -19,7 +19,7 @@ class GiftRollerTest {
 			assertTrue(g.tier().outcomes().stream().anyMatch(o -> o.outcome() == g.outcome()));
 			counts.merge(g.tier().id(), 1, Integer::sum);
 		}
-		Map<String, Double> expected = Map.of("disaster", 15.0, "cursed", 15.0, "junk", 30.0, "good", 30.0, "jackpot", 10.0);
+		Map<String, Double> expected = Map.of("disaster", 20.0, "cursed", 20.0, "junk", 10.0, "good", 35.0, "jackpot", 15.0);
 		expected.forEach((id, pct) -> assertEquals(pct, counts.get(id) * 100.0 / n, 1.0, id));
 	}
 }

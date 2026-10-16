@@ -52,6 +52,9 @@ public final class GiftOpenHandler {
 		Vec3 origin = Vec3.atCenterOf(pos);
 		try {
 			OutcomeApplier.apply(rolled.outcome(), level, pos, opener, rng);
+			for (var bonus : rolled.tier().bonus()) {
+				OutcomeApplier.apply(bonus, level, pos, opener, rng);
+			}
 		} catch (Exception e) {
 			RussianRouletteGifts.LOGGER.error("Failed to apply gift outcome {} (tier {}); returning the gift",
 					rolled.outcome(), rolled.tier().id(), e);

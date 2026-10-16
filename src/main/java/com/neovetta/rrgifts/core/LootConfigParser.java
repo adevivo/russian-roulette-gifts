@@ -60,7 +60,7 @@ public final class LootConfigParser {
 
 	private static TierDef parseTier(JsonElement el, String p) {
 		JsonObject o = asObject(el, p);
-		checkKeys(o, p, Set.of("id", "weight", "message", "outcomes"));
+		checkKeys(o, p, Set.of("id", "weight", "message", "outcomes", "bonus"));
 		String id = stringField(o, "id", p, null);
 		if (id.isEmpty()) {
 			throw new LootConfigException(p + ".id: must not be empty (got '')");
@@ -84,7 +84,19 @@ public final class LootConfigParser {
 		if (weight > 0 && total <= 0) {
 			throw new LootConfigException(p + ".outcomes: total outcome weight must be greater than 0 (got " + total + ")");
 		}
-		return new TierDef(id, weight, message, outs);
+		List<Outcome> bonus = new ArrayList<>();
+		if (o.has("bonus")) {
+			JsonArray barr = asArray(o.get("bonus"), p + ".bonus");
+			for (int i = 0; i < barr.size(); i++) {
+				String bp = p + ".bonus[" + i + "]";
+				JsonObject bo = asObject(barr.get(i), bp);
+				if (bo.has("weight")) {
+					throw new LootConfigException(bp + ".weight: bonus outcomes always apply and take no weight");
+				}
+				bonus.add(parseOutcome(bo, bp));
+			}
+		}
+		return new TierDef(id, weight, message, outs, bonus);
 	}
 
 	private static Outcome parseOutcome(JsonObject o, String p) {
