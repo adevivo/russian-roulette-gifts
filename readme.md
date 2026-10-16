@@ -2,7 +2,7 @@
 
 A **server-side-only** Fabric mod for Minecraft **26.2**. Craft a Mystery Gift, place it, right-click it, and something random comes out. It might be terrible (primed TNT, a creeper) or amazing (an enchanted sword). Vanilla clients can join a server running it, and it is optional on clients.
 
-> **Status: v0.2.0, playable.** Craft a gift, place it and right-click it. Tested in single-player. The config file and `/rrgifts give|reload` work; a vanilla-client check on a dedicated server is still to do.
+> **Status: v0.2.1, playable.** Craft a gift, place it and right-click it. Tested in single-player. The config file and `/rrgifts give|reload` work; a vanilla-client check on a dedicated server is still to do.
 
 ## Download
 
