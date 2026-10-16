@@ -79,6 +79,29 @@ There are 50 tests.
   - promote the GitHub release from pre-release
   - upload to CurseForge
 
+## Next feature: Empty Gift Box mob capture (designed 2026-10-16, not started)
+
+The idea came from a player conversation. It is a goofy prank feature, not a balanced one. The user's decisions:
+- **Config** (`russian-roulette-gifts.json`):
+  - `include_empty_gift_feature`: turns on the recipe and capturing
+  - `hostile_mob_capture`: false means passive and neutral mobs only
+  - `max_mobs`: 30
+- **Any mob can be captured,** including the Warden and the Wither, in any mix. No low-health requirement and no griefing safeguards, by design; it can be toned down later if needed.
+- **Capture rule:** right-click a mob with an Empty Gift Box in hand. The player must have hit that mob in the last ~5 s.
+- **Filled box:** looks identical to a Mystery Gift (the prank). Opening it releases every mob, spread around the gift. Hostile mobs target the opener.
+- **No recursion** (mobs in boxes in boxes).
+- **Always excluded:** players and the Ender Dragon. The dragon is excluded for a technical reason: it is a multipart entity tied to the End fight state, so capturing it would break the fight.
+
+**Spike first:**
+- Give each filled box a unique id in a `ResolvableProfile` property, e.g. `rrgifts:box`. Confirm the property survives place, break and explosion, the way the profile did in Session 1.
+- Store the captured mob data server-side in `SavedData`, keyed by that id. It should not go on the item: a placed skull drops other components, and data on the item would also be sent to clients.
+
+**Open questions:**
+- The empty-box recipe: possibly the gift recipe without the gold ingot.
+- Switching the recipe on and off from config needs a custom Fabric resource condition, because recipes are data files.
+- The 26.2 entity save/load API (`ValueOutput`/`ValueInput`, `EntityType.loadEntityRecursive`). Check it with javap.
+- The parser rejects unknown top-level keys, and `version` is 1. The new keys must be added to the parser, and older configs need defaults for them.
+
 ## Next steps (from the approved plan, `~/.claude/plans/read-the-readme-and-fluffy-dongarra.md`)
 
 2. ~~**Core + tests**~~ done. (pure Java, no MC imports): `WeightedRoller` (seedable), outcome model (`GiveItem`, `Explode`, `SpawnMob`, `Effect`, `Cursed`, `NestedGift`), tiers/loot table, Gson parser and validator with clear errors, `EnchantPicker`, bundled `loot.json`. Tests: a ~100k-roll run within ±1% of the weights, weight 0 never picked, bad configs rejected, enchant rules (incompatibles, level bounds, Binding only on wearables), bundled `loot.json` validates.
