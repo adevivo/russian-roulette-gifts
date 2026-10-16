@@ -1,0 +1,44 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "russianroulettegifts:empty_gift_enabled"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PSP",
+    "D D",
+    "PSP"
+  ],
+  "key": {
+    "P": "minecraft:paper",
+    "S": "minecraft:string",
+    "D": "#c:dyes"
+  },
+  "result": {
+    "id": "minecraft:player_head",
+    "count": 1,
+    "components": {
+      "minecraft:profile": {
+        "id": [
+          -1072597539,
+          1415006078,
+          -1149876399,
+          -718383108
+        ],
+        "name": "EmptyGiftBox",
+        "properties": [
+          {
+            "name": "textures",
+            "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2ZmYTRjZjhhZjdkYmJjMzM2ODUxYWY5NWJlNDUwMTJiMWFiOTYwNmIzNGZlZmNkMDk2MTRmZTRhNDQ3ZGRlNCJ9fX0="
+          }
+        ]
+      },
+      "minecraft:custom_name": "Empty Gift Box",
+      "minecraft:lore": [
+        "Hit a mob, then right-click it to box it up."
+      ]
+    }
+  }
+}

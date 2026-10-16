@@ -1,5 +1,8 @@
 {
   "version": 1,
+  "include_empty_gift_feature": true,
+  "hostile_mob_capture": true,
+  "max_mobs_per_box": 30,
   "tiers": [
     {
       "id": "disaster",

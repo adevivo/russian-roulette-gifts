@@ -79,7 +79,7 @@ There are 50 tests.
   - promote the GitHub release from pre-release
   - upload to CurseForge
 
-## Next feature: Empty Gift Box mob capture (designed 2026-10-16, not started)
+## Empty Gift Box mob capture: shipped in 0.3.0 (2026-10-16), tested in single-player
 
 The idea came from a player conversation. It is a goofy prank feature, not a balanced one. The user's decisions:
 - **Config** (`russian-roulette-gifts.json`):
@@ -92,7 +92,17 @@ The idea came from a player conversation. It is a goofy prank feature, not a bal
 - **No recursion** (mobs in boxes in boxes).
 - **Always excluded:** players and the Ender Dragon. The dragon is excluded for a technical reason: it is a multipart entity tied to the End fight state, so capturing it would break the fight.
 
-**Spike first:**
+**Built as designed.** The in-game results:
+- capture and opening work
+- the box id survives place and break
+- `boxes.dat` survives a quit and rejoin
+- the config upgrade replaced the untouched 0.2.1 default
+
+Creative-mode placement does not consume the box, so it makes copies with the same id that open empty. This is intended duplicate protection.
+
+The notes below are the original design. Use `DataFixTypes.SAVED_DATA_COMMAND_STORAGE`, never `null`: on 26.2, `readTagFromDisk` calls `update()` with no null guard (checked in the bytecode). This affects player-revive's `DeadPlayersData` too.
+
+**Spike first (done):**
 - Give each filled box a unique id in a `ResolvableProfile` property, e.g. `rrgifts:box`. Confirm the property survives place, break and explosion, the way the profile did in Session 1.
 - Store the captured mob data server-side in `SavedData`, keyed by that id. It should not go on the item: a placed skull drops other components, and data on the item would also be sent to clients.
 

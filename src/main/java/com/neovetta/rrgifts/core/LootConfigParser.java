@@ -31,7 +31,7 @@ public final class LootConfigParser {
 			throw new LootConfigException("$: malformed JSON: " + e.getMessage(), e);
 		}
 		JsonObject obj = asObject(root, "$");
-		checkKeys(obj, "$", Set.of("version", "tiers"));
+		checkKeys(obj, "$", Set.of("version", "tiers", "include_empty_gift_feature", "hostile_mob_capture", "max_mobs_per_box"));
 		int version = intField(obj, "version", "$", 1, 1, false, 0);
 		if (version != 1) {
 			throw new LootConfigException("version: unsupported version " + version + " (expected 1)");
@@ -55,7 +55,11 @@ public final class LootConfigParser {
 		if (total <= 0) {
 			throw new LootConfigException("tiers: total tier weight must be greater than 0 (got " + total + ")");
 		}
-		return new LootTable(tiers);
+		CaptureSettings capture = new CaptureSettings(
+				boolField(obj, "include_empty_gift_feature", "$", true),
+				boolField(obj, "hostile_mob_capture", "$", true),
+				intField(obj, "max_mobs_per_box", "$", 1, 64, true, CaptureSettings.DEFAULT_MAX_MOBS));
+		return new LootTable(tiers, capture);
 	}
 
 	private static TierDef parseTier(JsonElement el, String p) {
@@ -282,7 +286,7 @@ public final class LootConfigParser {
 		if (!o.has(key)) return def;
 		JsonElement e = o.get(key);
 		if (!e.isJsonPrimitive() || !e.getAsJsonPrimitive().isBoolean()) {
-			throw new LootConfigException(p + "." + key + ": expected true or false, got " + describe(e));
+			throw new LootConfigException((p.equals("$") ? "" : p + ".") + key + ": expected true or false, got " + describe(e));
 		}
 		return e.getAsBoolean();
 	}

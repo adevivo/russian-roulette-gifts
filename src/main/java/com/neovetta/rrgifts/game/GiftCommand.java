@@ -34,6 +34,15 @@ public final class GiftCommand {
 								.then(Commands.argument("targets", EntityArgument.players())
 										.executes(ctx -> give(ctx.getSource(), targets(ctx),
 												IntegerArgumentType.getInteger(ctx, "count"))))))
+				.then(Commands.literal("empty")
+						.executes(ctx -> giveEmpty(ctx.getSource(), List.of(ctx.getSource().getPlayerOrException()), 1))
+						.then(Commands.argument("count", IntegerArgumentType.integer(1, 64))
+								.executes(ctx -> giveEmpty(ctx.getSource(),
+										List.of(ctx.getSource().getPlayerOrException()),
+										IntegerArgumentType.getInteger(ctx, "count")))
+								.then(Commands.argument("targets", EntityArgument.players())
+										.executes(ctx -> giveEmpty(ctx.getSource(), targets(ctx),
+												IntegerArgumentType.getInteger(ctx, "count"))))))
 				.then(Commands.literal("reload").executes(ctx -> {
 					String msg = ConfigLoader.reload(ctx.getSource().getServer());
 					ctx.getSource().sendSuccess(() -> Component.literal(msg), true);
@@ -54,6 +63,18 @@ public final class GiftCommand {
 			}
 		}
 		src.sendSuccess(() -> Component.literal("Gave " + count + " Mystery Gift(s) to " + targets.size() + " player(s)"), true);
+		return targets.size();
+	}
+
+	private static int giveEmpty(CommandSourceStack src, Collection<ServerPlayer> targets, int count) {
+		for (ServerPlayer p : targets) {
+			ItemStack stack = GiftItems.createEmptyBox(count);
+			p.getInventory().add(stack);
+			if (!stack.isEmpty()) {
+				p.drop(stack, false);
+			}
+		}
+		src.sendSuccess(() -> Component.literal("Gave " + count + " Empty Gift Box(es) to " + targets.size() + " player(s)"), true);
 		return targets.size();
 	}
 }

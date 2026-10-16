@@ -56,4 +56,11 @@ public final class Feedback {
 		level.playSound(null, origin.x, origin.y, origin.z, sound, SoundSource.BLOCKS, 1.0f, pitch);
 		level.sendParticles(particle, origin.x, origin.y + 0.3, origin.z, count, 0.3, 0.3, 0.3, 0.05);
 	}
+
+	/** Plain title + subtitle with the same short timings as gift results. */
+	public static void title(ServerPlayer p, Component title, Component subtitle) {
+		p.connection.send(new ClientboundSetTitlesAnimationPacket(5, 40, 10));
+		p.connection.send(new ClientboundSetSubtitleTextPacket(subtitle));
+		p.connection.send(new ClientboundSetTitleTextPacket(title));
+	}
 }

@@ -2,7 +2,7 @@
 
 > Paste-ready copy for the CurseForge project page. The **Summary** goes in the short "Summary"
 > field. Everything below the second divider is the long description (CurseForge accepts Markdown).
-> Written for 0.2.1 on 2026-10-15.
+> Written for 0.2.1 on 2026-10-15. The Empty Gift Box section was added for 0.3.0 on 2026-10-16.
 
 ---
 
@@ -46,6 +46,18 @@ The classic items are Swim Fins, Jump Boots, the Copper Pickaxe, the Ginsu Iron 
 
 Opening a gift shows a big title with the result, along with sounds and particles for each tier.
 
+## 🎁 Empty Gift Box: catch mobs, prank your friends
+
+Craft an **Empty Gift Box** (the gift recipe without the gold ingot):
+
+1. Hit a mob.
+2. Right-click it with the box. **Into the box it goes.**
+3. Keep going: zombies, creepers, villagers, a Warden if you're brave. One box holds up to 30.
+
+Here's the trick: after the first catch, the box turns into a **perfect copy of a Mystery Gift**. Only you know what's inside. You see the count as you catch, and right-clicking into the air shows it again. Hand it to a friend. When they open it... **SURPRISE!**
+
+Players and the Ender Dragon can't be boxed. Server owners can turn the feature off, block hostile mobs, or change the box size in the config.
+
 ## Server-side only
 
 You don't need to install anything on the client. Put the mod on a Fabric server, and players with a completely **vanilla** client can craft, place and open gifts. It also works in single-player.
@@ -55,11 +67,12 @@ There are no new blocks or items. The gift is a vanilla player head with its own
 ## Commands (op)
 
 - `/rrgifts give [count] [players]`: hand out gifts, for events or testing.
+- `/rrgifts empty [count] [players]`: hand out Empty Gift Boxes.
 - `/rrgifts reload`: reload the loot config without restarting.
 
 ## Configure the loot
 
-Everything is in `config/russian-roulette-gifts.json`: tier odds, items, counts, enchantments, mobs, effects and messages.
+Everything is in `config/russian-roulette-gifts.json`: tier odds, items, counts, enchantments, mobs, effects and messages. The Empty Gift Box settings are there too: `include_empty_gift_feature`, `hostile_mob_capture` and `max_mobs_per_box`.
 
 - **Mistakes don't break your server.** A typo or an item that doesn't exist is reported in the log with its exact location, and the mod falls back to the default loot.
 - **Updates are safe.** If you never edited the config, it is upgraded automatically when the mod updates. If you did edit it, your changes are kept, and the log tells you when there's new default loot to compare against.

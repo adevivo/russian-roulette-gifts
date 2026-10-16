@@ -2,7 +2,7 @@
 
 A **server-side-only** Fabric mod for Minecraft **26.2**. Craft a Mystery Gift, place it, right-click it, and something random comes out. It might be terrible (primed TNT, a creeper) or amazing (an enchanted sword). Vanilla clients can join a server running it, and it is optional on clients.
 
-> **Status: v0.2.1, playable.** Craft a gift, place it and right-click it. Tested in single-player. The config file and `/rrgifts give|reload` work; a vanilla-client check on a dedicated server is still to do.
+> **Status: v0.3.0.** Mystery Gifts and the Empty Gift Box (mob capture) are both playable, tested in single-player. A dedicated server joined by a vanilla client is still to be checked.
 
 ## Download
 
@@ -48,6 +48,23 @@ The skin is an existing gift-box texture on Mojang's host (`textures.minecraft.n
 - **Identification:** the profile UUID. Vanilla skull block entities should keep the profile through place and break. This is the open question the spike must confirm.
 - **Code layout** (`com.neovetta.rrgifts`): `core/` is pure Java with no Minecraft imports (rolling, loot config, enchant picking, all unit-tested). `game/` is a thin Minecraft layer. This keeps a later 1.21.11 port cheap.
 
+## Empty Gift Box (mob capture)
+
+- **Recipe:** `PSP / D D / PSP`, the gift recipe without the gold ingot. It gives a pale pink Empty Gift Box.
+- **Capture:** hit a mob, then right-click it with the box within 5 seconds (vanilla remembers the last player who hit a mob for 100 ticks). The mob goes into the box.
+  - Any mix of mobs works, up to `max_mobs_per_box` (default 30), including the Warden and the Wither.
+  - Players, the Ender Dragon, and mobs that are riding or being ridden are refused.
+- **The prank:** after the first capture the box turns into an exact Mystery Gift lookalike. Only the capturer sees the count, "📦 n/30", shown after each capture and when right-clicking into the air.
+- **Opening:** place it and right-click, like any gift. Every mob comes out, spread around the gift, and hostile mobs target the opener.
+- **Storage:**
+  - the box carries a UUID in a `rrgifts_box` profile property, which survives place, break and explosion
+  - the mobs' saved entity data lives server-side in `data/russianroulettegifts/boxes.dat`, in the overworld's data folder
+  - a box taken to another world opens empty ("They escaped!")
+  - creative-mode copies share the UUID, so only the first one opened releases the mobs
+- **Config:**
+  - `include_empty_gift_feature` turns the recipe and capturing on or off. The recipe uses a Fabric resource condition that reads the config file directly, because datapacks load before the server starts.
+  - `hostile_mob_capture` and `max_mobs_per_box` set the capture rules.
+
 ## Spike results (2026-10-15, CurseForge client, MC 26.2, Fabric API 0.161.0)
 
 | Check | Result |
@@ -87,6 +104,7 @@ Mod ID `russianroulettegifts`. Mojmap names only (no Yarn). Check APIs with `jav
 ## Commands and config
 
 - `/rrgifts give [count] [targets]`: give Mystery Gifts (op level 2).
+- `/rrgifts empty [count] [targets]`: give Empty Gift Boxes (op level 2).
 - `/rrgifts reload`: re-read the loot config.
 - `config/russian-roulette-gifts.json` is written from the bundled default on first start. Every id is checked against the game registries. On any error the mod logs the JSON path and uses the default loot instead.
 - `config/russian-roulette-gifts.default.json` is the mod's reference copy of the current default. It is rewritten on each start. When the mod is updated:
